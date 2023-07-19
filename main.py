@@ -14,19 +14,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from flask import Flask, render_template, request, send_file
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
 
-# chromedriver_autoinstaller.install()
-
-service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
 # set chrome options
 
-driver = webdriver.Chrome(service=service, options=chrome_options)
+# driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # driver.get("https://medium.com")
 # print(driver.page_source)
@@ -41,7 +33,14 @@ def index():
 
         # Set up Selenium driver
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--headless')  # Run Chrome in headless mode
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
+
+# chromedriver_autoinstaller.install()
+
+        service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         driver = webdriver.Chrome(options=chrome_options)
         driver.get(url)
 
