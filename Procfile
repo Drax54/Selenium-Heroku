@@ -1,1 +1,2 @@
-web: gunicorn -b :$PORT main:app
+worker: python main.py
+web: gunicorn main:app.server
