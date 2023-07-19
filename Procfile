@@ -1,2 +1,1 @@
-worker: python main.py
-web: gunicorn main:app.server
+worker: python main:app
