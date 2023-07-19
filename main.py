@@ -45,7 +45,7 @@ def index():
         driver.get(url)
 
         # Wait for the "Allow cookies" button to be clickable
-        allow_cookies_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
+        allow_cookies_button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
 
         # Click on the "Allow cookies" button
         allow_cookies_button.click()
@@ -82,5 +82,4 @@ def download():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(debug=True)
