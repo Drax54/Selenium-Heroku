@@ -45,6 +45,7 @@ def index():
             html = driver.page_source
             driver.quit()
             
+            soup = bs4.BeautifulSoup(html, "html.parser")
             video_data = soup.find_all('video')[0]
             video_src = video_data['src']
             
