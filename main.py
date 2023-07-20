@@ -34,13 +34,14 @@ def index():
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
             driver = webdriver.Chrome(options=chrome_options)
             driver.get(url)
+            print("Got URL:", url)
 
             # Wait for the "Allow cookies" button to be clickable
             
             # allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
 
             try:
-                print("Clicking Cookie button video:", video_src)
+                print("Clicking Cookie button video:......")
                 allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
                 allow_cookies_button.click()
 
