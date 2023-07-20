@@ -58,7 +58,13 @@ def index():
             driver.quit()
             
             soup = bs4.BeautifulSoup(html, "html.parser")
-            video_data = soup.find_all('video')[0]
+
+            try:
+                video_data = soup.find_all('video')[0]
+            
+            except Exception as e:
+                video_data = soup.find_all('video')[0]    
+
             video_src = video_data['src']
             
             print("Downloading video:", video_src)
