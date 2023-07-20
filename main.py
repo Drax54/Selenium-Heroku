@@ -5,10 +5,9 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
-
+import time
 import chromedriver_autoinstaller
-
-
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -37,12 +36,22 @@ def index():
             driver.get(url)
 
             # Wait for the "Allow cookies" button to be clickable
-            allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
+            
+            # allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
+
+            try:
+                print("Clicking Cookie button video:", video_src)
+                allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
+                allow_cookies_button.click()
+
+            except TimeoutException as e:
+                print("Error: ", e)
+                # Here you can add code to wait for 40 seconds if you want
 
             # Click on the "Allow cookies" button
-            allow_cookies_button.click()
-
+            
             html = driver.page_source
+            print(html)
             driver.quit()
             
             soup = bs4.BeautifulSoup(html, "html.parser")
