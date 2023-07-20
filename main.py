@@ -13,6 +13,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from flask import Flask, render_template, request, send_file
+import webbrowser
 
 app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
@@ -28,6 +29,8 @@ def index():
             chrome_options.add_argument("--disable-dev-shm-usage")
             chrome_options.add_argument("--no-sandbox")
 
+            # webbrowser.open(url)
+
     # chromedriver_autoinstaller.install()
 
             service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
@@ -40,19 +43,18 @@ def index():
             
             # allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
 
-            try:
-                print("Clicking Cookie button video:......")
-                allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
-                allow_cookies_button.click()
+            # try:
+            #     print("Clicking Cookie button video:......")
+            #     allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
+            #     allow_cookies_button.click()
 
-            except TimeoutException as e:
-                print("Error: ", e)
-                # Here you can add code to wait for 40 seconds if you want
+            # except TimeoutException as e:
+            #     print("Error: ", e)
+            #     # Here you can add code to wait for 40 seconds if you want
 
-            # Click on the "Allow cookies" button
+            # # Click on the "Allow cookies" button
             
             html = driver.page_source
-            print(html)
             driver.quit()
             
             soup = bs4.BeautifulSoup(html, "html.parser")
