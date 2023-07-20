@@ -77,10 +77,7 @@ def index():
         
     except TimeoutException:
         print("Timeout waiting for allow cookies button")
-     
-    except WebDriverException as e:
-        print("Failed to initialize ChromeDriver:", e)
-     
+          
     except Exception as e:
         print("Unknown exception:", e)
      
