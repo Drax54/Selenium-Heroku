@@ -37,16 +37,13 @@ def index():
             driver.get(url)
 
             # Wait for the "Allow cookies" button to be clickable
-            allow_cookies_button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
+            allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
 
             # Click on the "Allow cookies" button
             allow_cookies_button.click()
 
             html = driver.page_source
             driver.quit()
-            
-            print("Parsing HTML...")
-            soup = bs4.BeautifulSoup(html, 'html.parser')
             
             video_data = soup.find_all('video')[0]
             video_src = video_data['src']
