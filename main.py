@@ -17,7 +17,6 @@ import webbrowser
 from selenium.webdriver.support import expected_conditions as EC
 from flask import Flask, request, render_template, send_file, flash, redirect, url_for
 
-
 # app = Flask(__name__)
 # app.secret_key = 'rhul'
 
@@ -115,6 +114,8 @@ from flask import Flask, request, render_template, send_file, flash, redirect, u
 
 
 # Set up Selenium driver
+
+
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
@@ -123,7 +124,9 @@ chrome_options.add_argument("--no-sandbox")
 service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
 driver.get("http://www.python.org")
 print(driver.title)
+
+driver.quit()
