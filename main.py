@@ -129,7 +129,6 @@ print("ChromeDriver path:", os.environ.get("CHROMEDRIVER_PATH"))
 print("ChromeDriver path:", os.environ.get("CHROMEDRIVER_PATH"))
 
 driver = webdriver.Chrome()
-driver.get(url)
 
 driver.get("http://www.python.org")
 print(driver.title)
