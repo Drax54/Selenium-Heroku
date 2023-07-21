@@ -40,48 +40,55 @@ def index():
             service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
-            # Include service and chrome_options as parameters
-            driver = webdriver.Chrome(service=service, options=chrome_options)
-            
-            # driver = webdriver.Chrome()
+            print("ChromeDriver path:", os.environ.get("CHROMEDRIVER_PATH"))
+            time.sleep(5)
 
+            driver = webdriver.Chrome()
             driver.get(url)
             print("Waiting for the Source code of:", url)
-            flash("Waiting for the Source code of: {}".format(url))
             time.sleep(5)
+
+            # # Click on the "Allow cookies" button
             
             html = driver.page_source
             time.sleep(5)
+            driver.quit()
             soup = bs4.BeautifulSoup(html, "html.parser")
 
-            video_data = soup.find_all('video')
-            time.sleep(5)
+            try:
+                video_data = soup.find_all('video')[0]
+            
+            except Exception as e:
+                video_data = soup.find_all('video') 
 
-            if video_data:  # if the list is not empty
-                video_src = video_data[0]['src']
-
-                print("Downloading video:", video_src)
-                flash("Downloading video: {}".format(video_src))
-                response = requests.get(video_src)
-
-                if response.status_code == 200:
-                    print("Saving video...")
-                    with open('downloads.mp4', 'wb') as f:
-                        f.write(response.content)
-
-                    print("Video downloaded!")
-
-                else:
-                    print("Failed to download video")
-
-                download_link = request.host_url + 'download'
-                return render_template('result.html', download_link=download_link)
+            video_src = video_data['src']
+            
+            print("Downloading video:", video_src)
+            flash("Downloading video: {}".format(video_src))
+            response = requests.get(video_src)
+            
+            if response.status_code == 200:
+                print("Saving video...")
+                with open('downloads.mp4', 'wb') as f:
+                    f.write(response.content)
+                
+                print("Video downloaded!")
+            
             else:
-                flash("No video found.")
+                print("Failed to download video")
+            
+            download_link = request.host_url + 'download'
+            return render_template('result.html', download_link=download_link)
+        
+    except TimeoutException:
+        print("Timeout waiting for allow cookies button")
+        flash("Timeout waiting for allow cookies button")
+          
     except Exception as e:
-        flash("An error occurred: {}".format(e))
+        print("Unknown exception:", e)
+        flash("Unknown exception: {}".format(e))
+     
     return render_template('index.html')
-
 
 @app.route('/download')
 def download():
