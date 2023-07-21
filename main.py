@@ -14,8 +14,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from flask import Flask, render_template, request, send_file
 import webbrowser
+from selenium.webdriver.support import expected_conditions as EC
+from flask import Flask, request, render_template, send_file, flash, redirect, url_for
+
 
 app = Flask(__name__)
+app.secret_key = 'rhul'
+
+
 @app.route('/', methods=['GET', 'POST'])
 
 def index():
@@ -35,39 +41,29 @@ def index():
 
             service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-            driver = webdriver.Chrome(options=chrome_options)
+            driver = webdriver.Chrome()
             driver.get(url)
-            print("Got URL:", url)
-
-            # Wait for the "Allow cookies" button to be clickable
-            
-            # allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
-
-            # try:
-            #     print("Clicking Cookie button video:......")
-            #     allow_cookies_button = WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(), "Allow all cookies")]')))
-            #     allow_cookies_button.click()
-
-            # except TimeoutException as e:
-            #     print("Error: ", e)
-            #     # Here you can add code to wait for 40 seconds if you want
+            print("Waiting for the Source code of:", url)
+            flash("Waiting for the Source code of: {}".format(url))
+            time.sleep(5)
 
             # # Click on the "Allow cookies" button
             
             html = driver.page_source
+            time.sleep(5)
             driver.quit()
-            
             soup = bs4.BeautifulSoup(html, "html.parser")
 
             try:
                 video_data = soup.find_all('video')[0]
             
             except Exception as e:
-                video_data = soup.find_all('video')[0]    
+                video_data = soup.find_all('video') 
 
             video_src = video_data['src']
             
             print("Downloading video:", video_src)
+            flash("Downloading video: {}".format(video_src))
             response = requests.get(video_src)
             
             if response.status_code == 200:
@@ -85,9 +81,11 @@ def index():
         
     except TimeoutException:
         print("Timeout waiting for allow cookies button")
+        flash("Timeout waiting for allow cookies button")
           
     except Exception as e:
         print("Unknown exception:", e)
+        flash("Unknown exception: {}".format(e))
      
     return render_template('index.html')
 
