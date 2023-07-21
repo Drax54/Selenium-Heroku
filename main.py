@@ -18,7 +18,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from flask import Flask, request, render_template, send_file, flash, redirect, url_for
 
 app = Flask(__name__)
-# app.secret_key = 'rhul'
+app.secret_key = 'rhul'
 
 @app.route('/', methods=['GET', 'POST'])
 
@@ -33,40 +33,35 @@ def index():
             chrome_options.add_argument("--disable-dev-shm-usage")
             chrome_options.add_argument("--no-sandbox")
 
+            # webbrowser.open(url)
+
+    # chromedriver_autoinstaller.install()
+
             service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            # driver = webdriver.Chrome()
 
             driver = webdriver.Chrome(service=service, options=chrome_options)
-            print(driver.title)
 
-            print("ChromeDriver path:", os.environ.get("CHROMEDRIVER_PATH"))
-            print("ChromeDriver path:", os.environ.get("CHROMEDRIVER_PATH"))
-            time.sleep(5)
-
-            # driver = webdriver.Chrome()
+            
             driver.get(url)
             print("Waiting for the Source code of:", url)
+            flash("Waiting for the Source code of: {}".format(url))
             time.sleep(5)
 
             # # Click on the "Allow cookies" button
             
             html = driver.page_source
             time.sleep(5)
-            driver.quit()
             soup = bs4.BeautifulSoup(html, "html.parser")
-
-            video_data = soup.find_all('video')
             
-            if video_data:
-                video_tag = video_data[0]  # get the first video tag
-                video_src = video_tag.get('src')  # access the 'src' attribute
+            try:
+                video_data = soup.find_all('video')[0]
+            
+            except Exception as e:
+                video_data = soup.find_all('video') 
 
-                print("Downloading video:", video_src)
-                flash("Downloading video: {}".format(video_src))
-                response = requests.get(video_src)
-            else:
-                print("No video found")
-
+            video_src = video_data['src']
             
             print("Downloading video:", video_src)
             flash("Downloading video: {}".format(video_src))
@@ -103,33 +98,3 @@ def download():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-
-# set chrome options
-
-# driver = webdriver.Chrome(service=service, options=chrome_options)
-
-# driver.get("https://medium.com")
-# print(driver.page_source)
-# print("Finished!")
-
-
-
-# Set up Selenium driver
-
-
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
-
-service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-
-driver = webdriver.Chrome(service=service, options=chrome_options)
-
-driver.get("http://www.python.org")
-
