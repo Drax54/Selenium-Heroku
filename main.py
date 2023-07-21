@@ -55,13 +55,18 @@ def index():
             driver.quit()
             soup = bs4.BeautifulSoup(html, "html.parser")
 
-            try:
-                video_data = soup.find_all('video')[0]
+            video_data = soup.find_all('video')
             
-            except Exception as e:
-                video_data = soup.find_all('video') 
+            if video_data:
+                video_tag = video_data[0]  # get the first video tag
+                video_src = video_tag.get('src')  # access the 'src' attribute
 
-            video_src = video_data['src']
+                print("Downloading video:", video_src)
+                flash("Downloading video: {}".format(video_src))
+                response = requests.get(video_src)
+            else:
+                print("No video found")
+
             
             print("Downloading video:", video_src)
             flash("Downloading video: {}".format(video_src))
