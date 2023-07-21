@@ -41,6 +41,7 @@ def index():
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
             print("ChromeDriver path:", os.environ.get("CHROMEDRIVER_PATH"))
+            print("ChromeDriver path:", os.environ.get("GOOGLE_CHROME_BIN"))
             time.sleep(5)
 
             driver = webdriver.Chrome()
