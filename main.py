@@ -1,21 +1,21 @@
-# import os
-# import re
-# import requests, bs4
-# from bs4 import BeautifulSoup
-# from selenium import webdriver
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.chrome.service import Service
-# import time
-# import chromedriver_autoinstaller
-# from selenium.common.exceptions import TimeoutException
-# from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
-# from flask import Flask, render_template, request, send_file
-# import webbrowser
-# from selenium.webdriver.support import expected_conditions as EC
-# from flask import Flask, request, render_template, send_file, flash, redirect, url_for
+import os
+import re
+import requests, bs4
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
+import time
+import chromedriver_autoinstaller
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from flask import Flask, render_template, request, send_file
+import webbrowser
+from selenium.webdriver.support import expected_conditions as EC
+from flask import Flask, request, render_template, send_file, flash, redirect, url_for
 
 
 # app = Flask(__name__)
@@ -112,8 +112,6 @@
 # print(driver.page_source)
 # print("Finished!")
 
-import os
-from selenium import webdriver
 
 
 # Set up Selenium driver
