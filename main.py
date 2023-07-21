@@ -115,11 +115,21 @@
 import os
 from selenium import webdriver
 
+
+# Set up Selenium driver
 chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
+
 driver = webdriver.Chrome(os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+
+print("ChromeDriver path:", os.environ.get("CHROMEDRIVER_PATH"))
+print("ChromeDriver path:", os.environ.get("CHROMEDRIVER_PATH"))
+
+driver = webdriver.Chrome()
+driver.get(url)
+
 driver.get("http://www.python.org")
 print(driver.title)
