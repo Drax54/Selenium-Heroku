@@ -37,7 +37,7 @@ def index():
 
             # webbrowser.open(url)
 
-    # chromedriver_autoinstaller.install()
+            chromedriver_autoinstaller.install()
 
             service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -45,13 +45,13 @@ def index():
             driver.get(url)
             print("Waiting for the Source code of:", url)
             flash("Waiting for the Source code of: {}".format(url))
-            time.sleep(5)
+            time.sleep(10)
 
             # # Click on the "Allow cookies" button
             
             html = driver.page_source
-            time.sleep(5)
-            driver.quit()
+            time.sleep(10)
+            # driver.quit()
             soup = bs4.BeautifulSoup(html, "html.parser")
 
             try:
