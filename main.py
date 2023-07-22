@@ -50,6 +50,7 @@ def index():
             
 
             video_data = ''
+            video_src = ''
             # # Click on the "Allow cookies" button
             try:
                 timeout = 10
@@ -59,6 +60,7 @@ def index():
                 soup = bs4.BeautifulSoup(html, "html.parser")
                 time.sleep(2)
                 video_data = soup.find_all('video')[0]
+                video_src = video_data['src']
 
             except TimeoutException:
                 print("Element not found after wait")  
@@ -67,9 +69,7 @@ def index():
             
             # except Exception as e:
             #     video_data = soup.find_all('video') 
-
-            video_src = video_data['src']
-            
+ 
             print("Downloading video:", video_src)
             flash("Downloading video: {}".format(video_src))
             response = requests.get(video_src)
