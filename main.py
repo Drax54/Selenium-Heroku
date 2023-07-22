@@ -35,7 +35,7 @@ def index():
 
             # webbrowser.open(url)
 
-    # chromedriver_autoinstaller.install()
+            # chromedriver_autoinstaller.install()
 
             service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -47,23 +47,21 @@ def index():
             print("Waiting for the Source code of:", url)
             flash("Waiting for the Source code of: {}".format(url))
             time.sleep(5)
-            html = driver.page_source
-            time.sleep(2)
-            soup = bs4.BeautifulSoup(html, "html.parser")
-            time.sleep(2)
+            
+
             video_data = ''
             # # Click on the "Allow cookies" button
-
             try:
-                element = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.ID, "myDynamicElement"))
-                )
-                
+                timeout = 10
+                WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((By.TAG_NAME, "body")))
+                time.sleep(2)
+                html = driver.page_source
+                soup = bs4.BeautifulSoup(html, "html.parser")
+                time.sleep(2)
                 video_data = soup.find_all('video')[0]
 
             except TimeoutException:
                 print("Element not found after wait")  
-
             # try:
             #     video_data = soup.find_all('video')[0]
             
