@@ -50,13 +50,10 @@ def index():
             video_data = ''
             video_src = ''
             # # Click on the "Allow cookies" button
-
             timeout = 10
             WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((By.TAG_NAME, "body")))
-            time.sleep(2)
             html = driver.page_source
             soup = bs4.BeautifulSoup(html, "html.parser")
-            time.sleep(2)
 
             video_data_list = soup.find_all('video')
 
