@@ -41,12 +41,12 @@ def index():
 
             # chromedriver_autoinstaller.install()
 
-
             driver = webdriver.Chrome()
 
             # driver = webdriver.Chrome(service=service, options=chrome_options)
            
             driver.get(url)
+            time.sleep(5)
             video_data = ''
             video_src = ''
             # # Click on the "Allow cookies" button
@@ -94,7 +94,6 @@ def index():
 def download():
     file_path = 'downloads.mp4'
     return send_file(file_path, as_attachment=True)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
