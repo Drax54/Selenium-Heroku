@@ -42,24 +42,33 @@ def index():
             # driver = webdriver.Chrome()
 
             driver = webdriver.Chrome(service=service, options=chrome_options)
-
-            
+           
             driver.get(url)
             print("Waiting for the Source code of:", url)
             flash("Waiting for the Source code of: {}".format(url))
             time.sleep(5)
-
-            # # Click on the "Allow cookies" button
-            
             html = driver.page_source
-            time.sleep(5)
+            time.sleep(2)
             soup = bs4.BeautifulSoup(html, "html.parser")
-            
+            time.sleep(2)
+            video_data = ''
+            # # Click on the "Allow cookies" button
+
             try:
+                element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.ID, "myDynamicElement"))
+                )
+                
                 video_data = soup.find_all('video')[0]
+
+            except TimeoutException:
+                print("Element not found after wait")  
+
+            # try:
+            #     video_data = soup.find_all('video')[0]
             
-            except Exception as e:
-                video_data = soup.find_all('video') 
+            # except Exception as e:
+            #     video_data = soup.find_all('video') 
 
             video_src = video_data['src']
             
