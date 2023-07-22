@@ -44,11 +44,6 @@ def index():
             # driver = webdriver.Chrome(service=service, options=chrome_options)
            
             driver.get(url)
-            print("Waiting for the Source code of:", url)
-            flash("Waiting for the Source code of: {}".format(url))
-            time.sleep(5)
-            
-
             video_data = ''
             video_src = ''
             # # Click on the "Allow cookies" button
@@ -59,15 +54,19 @@ def index():
                 html = driver.page_source
                 soup = bs4.BeautifulSoup(html, "html.parser")
                 time.sleep(2)
-                video_data = soup.find_all('video')[0]
-                print(video_data)
-                video_src = video_data['src']
+
+                video_data_list = soup.find_all('video')
+
+                if len(video_data_list) > 0:  # Only proceed if the list is not empty
+                    video_data = video_data_list[0]
+                    print(video_data)
+                    video_src = video_data['src']
+                else:
+                    print("No video tags found on the page.")
 
             except TimeoutException:
                 print("Element not found after wait")  
  
-            print("Downloading video:", video_src)
-            flash("Downloading video: {}".format(video_src))
             response = requests.get(video_src)
             
             if response.status_code == 200:
