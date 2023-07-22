@@ -50,25 +50,23 @@ def index():
             video_data = ''
             video_src = ''
             # # Click on the "Allow cookies" button
-            try:
-                timeout = 10
-                WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((By.TAG_NAME, "body")))
-                time.sleep(2)
-                html = driver.page_source
-                soup = bs4.BeautifulSoup(html, "html.parser")
-                time.sleep(2)
 
-                video_data_list = soup.find_all('video')
+            timeout = 10
+            WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((By.TAG_NAME, "body")))
+            time.sleep(2)
+            html = driver.page_source
+            soup = bs4.BeautifulSoup(html, "html.parser")
+            time.sleep(2)
 
-                if len(video_data_list) > 0:  # Only proceed if the list is not empty
-                    video_data = video_data_list[0]
-                    print(video_data)
-                    video_src = video_data['src']
-                else:
-                    print("No video tags found on the page.")
+            video_data_list = soup.find_all('video')
 
-            except TimeoutException:
-                print("Element not found after wait")  
+            if len(video_data_list) > 0:  # Only proceed if the list is not empty
+                video_data = video_data_list[0]
+                print(video_data)
+                video_src = video_data['src']
+            else:
+                print("No video tags found on the page.")
+
  
             response = requests.get(video_src)
             
