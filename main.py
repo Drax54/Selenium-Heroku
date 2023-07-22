@@ -39,9 +39,9 @@ def index():
 
             service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-            # driver = webdriver.Chrome()
+            driver = webdriver.Chrome()
 
-            driver = webdriver.Chrome(service=service, options=chrome_options)
+            # driver = webdriver.Chrome(service=service, options=chrome_options)
            
             driver.get(url)
             print("Waiting for the Source code of:", url)
@@ -60,15 +60,11 @@ def index():
                 soup = bs4.BeautifulSoup(html, "html.parser")
                 time.sleep(2)
                 video_data = soup.find_all('video')[0]
+                print(video_data)
                 video_src = video_data['src']
 
             except TimeoutException:
                 print("Element not found after wait")  
-            # try:
-            #     video_data = soup.find_all('video')[0]
-            
-            # except Exception as e:
-            #     video_data = soup.find_all('video') 
  
             print("Downloading video:", video_src)
             flash("Downloading video: {}".format(video_src))
